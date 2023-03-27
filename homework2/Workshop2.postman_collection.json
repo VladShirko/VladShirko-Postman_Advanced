@@ -1,0 +1,450 @@
+{
+	"info": {
+		"_postman_id": "10a76241-d2bd-4001-b344-08470b59daf1",
+		"name": "Workshop2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18396141"
+	},
+	"item": [
+		{
+			"name": "Task #1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"names1\", ['Anastasia', 'Svetlana', 'Nikita', 'Viktar', 'Egor']);\r",
+							"pm.collectionVariables.set(\"names2\", ['Svetlana', 'Egor', 'Nikita']);\r",
+							"\r",
+							"function filterNames(names1, names2) {\r",
+							"    return _.difference(names1, names2);\r",
+							"}\r",
+							"const names1 = pm.collectionVariables.get(\"names1\");\r",
+							"const names2 = pm.collectionVariables.get(\"names2\");\r",
+							"const filteredNames = filterNames(names1, names2);\r",
+							"if (filteredNames.length === 0) {\r",
+							"    console.log(\"No names found in names1 that are not in names2\");\r",
+							"} else {\r",
+							"    console.log(filteredNames);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://httpbin.org/get",
+					"protocol": "http",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task #2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const moment = require('moment');\r",
+							"const randomString = _.random(1000000, 9999999).toString(36);\r",
+							"\r",
+							"const date = moment().format();\r",
+							"\r",
+							"const guid = pm.variables.replaceIn(\"{{$guid}}\");\r",
+							"\r",
+							"pm.collectionVariables.set(\"date\", date);\r",
+							"pm.collectionVariables.set(\"guid\", guid);\r",
+							"pm.collectionVariables.set(\"randomString\", randomString);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const ajv = require('ajv');\r",
+							"const resBody = pm.response.json();\r",
+							"const ajvInstance = new ajv({logger: console});\r",
+							"\r",
+							"const schema = {\r",
+							"        \"type\": \"object\",\r",
+							"    \"default\": {},\r",
+							"    \"title\": \"Root Schema\",\r",
+							"    \"required\": [\r",
+							"        \"args\",\r",
+							"        \"data\",\r",
+							"        \"files\",\r",
+							"        \"form\",\r",
+							"        \"headers\",\r",
+							"        \"json\",\r",
+							"        \"url\"\r",
+							"    ],\r",
+							"    \"properties\": {\r",
+							"        \"args\": {\r",
+							"            \"type\": \"object\",\r",
+							"            \"default\": {},\r",
+							"            \"title\": \"The args Schema\",\r",
+							"            \"required\": [],\r",
+							"            \"properties\": {},\r",
+							"            \"examples\": [{}]\r",
+							"        },\r",
+							"        \"data\": {\r",
+							"            \"type\": \"object\",\r",
+							"            \"default\": {},\r",
+							"            \"title\": \"The data Schema\",\r",
+							"            \"required\": [],\r",
+							"            \"properties\": {},\r",
+							"            \"examples\": [{}]\r",
+							"        },\r",
+							"        \"files\": {\r",
+							"            \"type\": \"object\",\r",
+							"            \"default\": {},\r",
+							"            \"title\": \"The files Schema\",\r",
+							"            \"required\": [],\r",
+							"            \"properties\": {},\r",
+							"            \"examples\": [{}]\r",
+							"        },\r",
+							"        \"form\": {\r",
+							"            \"type\": \"object\",\r",
+							"            \"default\": {},\r",
+							"            \"title\": \"The form Schema\",\r",
+							"            \"required\": [],\r",
+							"            \"properties\": {},\r",
+							"            \"examples\": [{}]\r",
+							"        },\r",
+							"        \"headers\": {\r",
+							"            \"type\": \"object\",\r",
+							"            \"default\": {},\r",
+							"            \"title\": \"The headers Schema\",\r",
+							"            \"required\": [\r",
+							"                \"x-forwarded-proto\",\r",
+							"                \"x-forwarded-port\",\r",
+							"                \"host\",\r",
+							"                \"x-amzn-trace-id\",\r",
+							"                \"content-length\",\r",
+							"                \"user-agent\",\r",
+							"                \"accept\",\r",
+							"                \"postman-token\",\r",
+							"                \"accept-encoding\",\r",
+							"                \"cookie\"\r",
+							"            ],\r",
+							"            \"properties\": {\r",
+							"                \"x-forwarded-proto\": {\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"title\": \"The x-forwarded-proto Schema\",\r",
+							"                    \"examples\": [\r",
+							"                        \"https\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"x-forwarded-port\": {\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"title\": \"The x-forwarded-port Schema\",\r",
+							"                    \"examples\": [\r",
+							"                        \"443\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"host\": {\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"title\": \"The host Schema\",\r",
+							"                    \"examples\": [\r",
+							"                        \"postman-echo.com\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"x-amzn-trace-id\": {\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"title\": \"The x-amzn-trace-id Schema\",\r",
+							"                    \"examples\": [\r",
+							"                        \"Root=1-64219999-1b05135225b7d5525d70b80b\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"content-length\": {\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"title\": \"The content-length Schema\",\r",
+							"                    \"examples\": [\r",
+							"                        \"0\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"user-agent\": {\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"title\": \"The user-agent Schema\",\r",
+							"                    \"examples\": [\r",
+							"                        \"PostmanRuntime/7.31.3\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"accept\": {\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"title\": \"The accept Schema\",\r",
+							"                    \"examples\": [\r",
+							"                        \"*/*\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"postman-token\": {\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"title\": \"The postman-token Schema\",\r",
+							"                    \"examples\": [\r",
+							"                        \"0a6d329c-fbd9-4555-9e45-b58175658785\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"accept-encoding\": {\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"title\": \"The accept-encoding Schema\",\r",
+							"                    \"examples\": [\r",
+							"                        \"gzip, deflate, br\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"cookie\": {\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"title\": \"The cookie Schema\",\r",
+							"                    \"examples\": [\r",
+							"                        \"sails.sid=s%3ATxtelL7hKdLHRJel-FwITzmnEozeO3Am.PNDqq1HaKbs%2BSFMNqdBmOFcVXJ8vlqapkLKP6YbDXjw\"\r",
+							"                    ]\r",
+							"                }\r",
+							"            },\r",
+							"            \"examples\": [{\r",
+							"                \"x-forwarded-proto\": \"https\",\r",
+							"                \"x-forwarded-port\": \"443\",\r",
+							"                \"host\": \"postman-echo.com\",\r",
+							"                \"x-amzn-trace-id\": \"Root=1-64219999-1b05135225b7d5525d70b80b\",\r",
+							"                \"content-length\": \"0\",\r",
+							"                \"user-agent\": \"PostmanRuntime/7.31.3\",\r",
+							"                \"accept\": \"*/*\",\r",
+							"                \"postman-token\": \"0a6d329c-fbd9-4555-9e45-b58175658785\",\r",
+							"                \"accept-encoding\": \"gzip, deflate, br\",\r",
+							"                \"cookie\": \"sails.sid=s%3ATxtelL7hKdLHRJel-FwITzmnEozeO3Am.PNDqq1HaKbs%2BSFMNqdBmOFcVXJ8vlqapkLKP6YbDXjw\"\r",
+							"            }]\r",
+							"        },\r",
+							"        \"json\": {\r",
+							"            \"type\": \"null\",\r",
+							"            \"default\": null,\r",
+							"            \"title\": \"The json Schema\",\r",
+							"            \"examples\": [\r",
+							"                null\r",
+							"            ]\r",
+							"        },\r",
+							"        \"url\": {\r",
+							"            \"type\": \"string\",\r",
+							"            \"default\": \"\",\r",
+							"            \"title\": \"The url Schema\",\r",
+							"            \"examples\": [\r",
+							"                \"https://postman-echo.com/post\"\r",
+							"            ]\r",
+							"        }\r",
+							"    },\r",
+							"    \"examples\": [{\r",
+							"        \"args\": {},\r",
+							"        \"data\": {},\r",
+							"        \"files\": {},\r",
+							"        \"form\": {},\r",
+							"        \"headers\": {\r",
+							"            \"x-forwarded-proto\": \"https\",\r",
+							"            \"x-forwarded-port\": \"443\",\r",
+							"            \"host\": \"postman-echo.com\",\r",
+							"            \"x-amzn-trace-id\": \"Root=1-64219999-1b05135225b7d5525d70b80b\",\r",
+							"            \"content-length\": \"0\",\r",
+							"            \"user-agent\": \"PostmanRuntime/7.31.3\",\r",
+							"            \"accept\": \"*/*\",\r",
+							"            \"postman-token\": \"0a6d329c-fbd9-4555-9e45-b58175658785\",\r",
+							"            \"accept-encoding\": \"gzip, deflate, br\",\r",
+							"            \"cookie\": \"sails.sid=s%3ATxtelL7hKdLHRJel-FwITzmnEozeO3Am.PNDqq1HaKbs%2BSFMNqdBmOFcVXJ8vlqapkLKP6YbDXjw\"\r",
+							"        },\r",
+							"        \"json\": null,\r",
+							"        \"url\": \"https://postman-echo.com/post\"\r",
+							"    }]\r",
+							"}\r",
+							"\r",
+							"pm.test('Schema is valid', function () {\r",
+							"    pm.expect(ajvInstance.validate(resBody, schema)).to.be.true;\r",
+							"  \r",
+							"});\r",
+							" console.log (ajvInstance.errors)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"date\": {{date}},\r\n    \"guid\": {{guid}},\r\n    \"randomString\": {{randomString}}\r\n}'",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://postman-echo.com/post",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task #3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.sendRequest('https://rickandmortyapi.com/api/character', (err, response) => {\r",
+							"    if (err) {\r",
+							"    console.error(err);\r",
+							"    return;\r",
+							"  }\r",
+							"\r",
+							"  const contentType = response.headers.get('Content-Type');\r",
+							"  pm.test('Content-Type header is application/json', () => {\r",
+							"    pm.expect(contentType).to.include('application/json');\r",
+							"  });\r",
+							"\r",
+							"pm.test('Verify status code is 200', function () {\r",
+							"    pm.expect(response.code).to.equal(200);\r",
+							"    const statusCode = response.code;\r",
+							"  });\r",
+							" if (response.code === 200) {\r",
+							"  const characters = response.json().results;\r",
+							"  const morty = characters.find(char => char.name === 'Morty Smith');\r",
+							"  if (morty) {\r",
+							"      const mortyId = morty.id;\r",
+							"   pm.sendRequest(`https://rickandmortyapi.com/api/character/${mortyId + 1}`, (err, response) => {\r",
+							"          if (err) {\r",
+							"        console.error(err);\r",
+							"        return;\r",
+							"      }\r",
+							"   \r",
+							"      const character = response.json();\r",
+							"    \r",
+							"      pm.test('Character is Human', () => {\r",
+							"        pm.expect(character.species).to.eql('Human');\r",
+							"      });\r",
+							"   \r",
+							"      pm.test('Name is a string', () => {\r",
+							"        pm.expect(character.name).to.be.a('string');\r",
+							"      });\r",
+							"     \r",
+							"      pm.test('Verify status code is 200', function () {\r",
+							"    pm.expect(response.code).to.equal(200);\r",
+							"  });\r",
+							"    });\r",
+							"  } else {\r",
+							"    console.error('Morty Smith not found');\r",
+							"  }\r",
+							"}\r",
+							"else {\r",
+							"    console.error(`API request failed with status code ${response.code}`);\r",
+							"  }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/character",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"character"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "filteredNames",
+			"value": ""
+		},
+		{
+			"key": "names1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "names2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "date",
+			"value": ""
+		},
+		{
+			"key": "guid",
+			"value": ""
+		},
+		{
+			"key": "randomString",
+			"value": ""
+		}
+	]
+}
